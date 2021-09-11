@@ -4,12 +4,13 @@
 
 ### Summary
 
-This will create a container with a DNS proxy function.
-It has a pre-defined IP address (within the python code) that will listen on port 53, therefore, DNS requests sent to that IP address will be handled by the DNS proxy.
+This project aims to provide the functionality of a DNS proxy over TLS.
+It aims to be used as a micro-service (within a container) so you can specify an IP address (called using -e when running the container with Docker) that will listen on port 53, therefore, DNS requests sent to that IP address will be handled by the DNS proxy.
 
-The proxy reads the query sent via UDP, creates a connection with an upstream server (Cloudflare) over TCP(TLS) and handles back the response to the client.
+The proxy reads the query sent via UDP, creates an encrypted connection with an upstream server (Cloudflare) over TCP(TLS) and handles back the response to the client.
 
-### Running the project
+It requires the [dnspython](https://www.dnspython.org/) library, as it will handle all the binary data from the requests, otherwise, you will have to manage the raw data from the client and the upstream server.
+### Running the project in a container
 
 - Create a network to avoid problems within your own LAN. Therefore
 you should create a new docker network by executing (or use one you already have):
@@ -111,11 +112,13 @@ As the connection won't be encrypted **between the proxy and the clients (applic
 
 # References
 
-https://docs.python.org/3/library/ssl.html
-https://docs.python.org/3.7/library/socket.html
-https://datatracker.ietf.org/doc/html/rfc1035
-https://routley.io/posts/hand-writing-dns-messages/
-https://gist.github.com/mrpapercut/92422ecf06b5ab8e64e502da5e33b9f7#file-raw-dns-req-py-L15
-https://github.com/tigerlyb/DNS-Proxy-Server-in-Python/blob/master/DNSProxyServer.py
+- https://docs.python.org/3/library/ssl.html
+- https://docs.python.org/3.7/library/socket.html
+- https://pythontic.com/ssl/sslcontext/wrap_socket
+- https://datatracker.ietf.org/doc/html/rfc1035
+- https://routley.io/posts/hand-writing-dns-messages/
+- https://gist.github.com/mrpapercut/92422ecf06b5ab8e64e502da5e33b9f7#file-raw-dns-req-py-L15
+- https://github.com/tigerlyb/DNS-Proxy-Server-in-Python/blob/master/DNSProxyServer.py
+- https://developers.cloudflare.com/1.1.1.1/encrypted-dns/dns-over-tls
 
 
