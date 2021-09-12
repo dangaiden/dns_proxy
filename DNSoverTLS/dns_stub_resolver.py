@@ -8,7 +8,7 @@ import dns.query
 # Constants variables
 
 SERVER = os.environ("DNS_PROXY_IP") #  IP address of DNS proxy
-PORT = 53000 #  Port of DNS proxy
+PORT = 53 #  Port of DNS proxy
 ADDR = (SERVER, PORT)
 DNS_SRV = "one.one.one.one" # One of Cloudflare's upstream servers.
 
