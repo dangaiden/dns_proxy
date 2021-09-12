@@ -7,7 +7,7 @@ import dns.query
 
 # Constants variables
 
-SERVER = os.environ("DNS_PROXY_IP") #  IP address of DNS proxy
+SERVER = os.environ.get("DNS_PROXY_IP") #  IP address of DNS proxy
 PORT = 53 #  Port of DNS proxy
 ADDR = (SERVER, PORT)
 DNS_SRV = "one.one.one.one" # One of Cloudflare's upstream servers.
@@ -47,7 +47,7 @@ def handle_query (tls_sock, dns_query, DNS):
         output = tcp_query.to_wire() #  We convert it back from a dns.message object to a binary data response
         return output
     else:
-        print (f"REPLY EMPTY OR NONE: {tcp_query}")
+        print (f"REPLY EMPTY: {tcp_query}")
 
 if __name__ == "__main__": #  Boilerplate code to know if this module is being run directly and not imported.
     try:

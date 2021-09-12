@@ -9,7 +9,7 @@ It aims to be used as a micro-service (within a container) so you can specify an
 
 The proxy reads the query sent via UDP, creates an encrypted connection with an upstream server (Cloudflare) over TCP(TLS) and handles back the response to the client.
 
-It requires the [dnspython](https://www.dnspython.org/) library, as it will handle all the binary data from the requests, otherwise, you will have to manage the raw data from the client and the upstream server.
+It requires the [dnspython](https://www.dnspython.org/) library, as it will handle all the binary data from the requests and replies, otherwise, you will have to manage the raw data from the client and the upstream server.
 ### Running the project in a container
 
 - Create a network to avoid problems within your own LAN. Therefore
@@ -36,12 +36,12 @@ docker run --name <your-container-name> -e DNS_PROXY_IP=<IP-address> -d --net <y
 
 Example:
 ```
-docker run --name proxy_dns -e DNS_PROXY_IP=192.168.10.2 -d --net dns_nw10 dns_srv_proxy
+docker run --name proxy_dns -e DNS_PROXY_IP=192.168.10.2 -d --net dns_network dns_srv_proxy
 ```
 
 - To test it you can do it in different ways:
 
-You can try to use the IP address of the DNS proxy as your DNS/Nameserver and perform a nslookup or just navigate using web browser.
+You can try to use the IP address of the DNS proxy as your DNS/Nameserver and perform a nslookup or just navigate using your web browser.
 
 Tested it with the following tools: nslookup and dig
 
@@ -86,31 +86,12 @@ Address: 184.168.221.96
 
 ```
 
+## Possible improvements
 
-## Improvements
-
+- Control error of messages (RCODE for example)
 - Add TCP connectivity between client and proxy.
-- Buffer/Cache
-- SSL offloading
-
-## Question
-
-We are also asking you to describe how you will deploy the proxy in a cloud-based infrastructure with various client applications already deployed in it. (Just a text description. You can also attach a
-scheme/diagram if it makes sense, no strong requirements here).
-
-### Answer
-
-Regarding the proxy, the best scenario will be within the same network (LAN) where different applications are located.
-
-This means that if we have different environments, as they will be in different networks, a proxy for each enviroment will be the best fit to process all the requests from the different applications and to provide security.
-
-The packets between the proxy and the upstream DNS server are sent over an encrypted connection so there is no expected security risks.
-
-In the other hand, in my case where the proxy doesn't support TCP from the client side (LAN), it would be mandatory to do it within the internal network.
-
-As the connection won't be encrypted **between the proxy and the clients (applications)**, it will be vulnerable to a Man-in-the-middle (MITM) attacks as the DNS queries are sent over the plain text connection.
-
-# References
+- Add caching to gain performance in repetitive queries.
+# References used for this project
 
 - https://docs.python.org/3/library/ssl.html
 - https://docs.python.org/3.7/library/socket.html
