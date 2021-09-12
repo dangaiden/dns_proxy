@@ -11,7 +11,7 @@ The proxy reads the query sent via UDP, creates an encrypted connection with an 
 
 It requires the [dnspython](https://www.dnspython.org/) library, as it will handle all the binary data from the requests and replies, otherwise, you will have to manage the raw data from the client and the upstream server.
 
-The best suit for a dns proxy should be within the same network (LAN) than your applications are running:
+The best suit for a DNS proxy should be within the same network (LAN) than your applications are running:
 
 ![Cloud Architecture](/Cloud_architecture_overview.png "Architecture Overview")
 
@@ -33,20 +33,21 @@ Example:
 docker build -t dns_srv_proxy .
 ```
 
-- Run the container in dettached mode within the docker network created previously:
+- Run the container (**as root which is not recommended**) in dettached mode within the docker network created previously:
 
 ```
-docker run --name <your-container-name> -e DNS_PROXY_IP=<IP-address> -d --net <your-docker-network> <your-image-name>
+docker run --name <your-container-name> -e DNS_PROXY_IP=<your-IP-address> -d --net <your-docker-network> <your-image-name>
 ```
 
 Example:
 ```
 docker run --name proxy_dns -e DNS_PROXY_IP=192.168.10.2 -d --net dns_network dns_srv_proxy
+
 ```
 
 - To test it you can do it in different ways:
 
-You can try to use the IP address of the DNS proxy as your DNS/Nameserver and perform a nslookup or just navigate using your web browser.
+You can try using the IP address of the DNS proxy as your DNS/Nameserver, then perform a nslookup or just navigate using your web browser to see if it works as expected.
 
 Tested it with the following tools: nslookup and dig
 

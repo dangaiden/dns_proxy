@@ -7,10 +7,10 @@ import dns.query
 
 # Constants variables
 
-SERVER = os.environ.get("DNS_PROXY_IP") #  IP address of DNS proxy
+SERVER = os.environ.get("DNS_PROXY_IP") #  IP address of DNS proxy expected to be gathered from ENV variables (used in docker run -e <var>=<value>)
 PORT = 53 #  Port of DNS proxy
 ADDR = (SERVER, PORT)
-DNS_SRV = "one.one.one.one" # One of Cloudflare's upstream servers.
+DNS_SRV = "1.1.1.1" #  One of Cloudflare's upstream servers. Used IP address as hostname "one.one.one.one" points to 1.0.0.1
 
 def manage_request(addr, data, DNS, s): # Calls other functions with the incoming data from the client and sends it back.
     sock_tls=tls_connection(DNS) #  First, we create a connection with Cloudflare in another function.
@@ -63,7 +63,7 @@ if __name__ == "__main__": #  Boilerplate code to know if this module is being r
     except KeyboardInterrupt:
         s.close()
         print ("Socket closed due to Keyboard Interrupt (CTRL+C)")
-    except IOError:
-        print ("Error: Can not find file or read data")
+    except OSError as OS:
+        print ("OS error:", OS)
     except Exception as e:
-        print (e)
+        print ("General error:", e)
