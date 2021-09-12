@@ -19,11 +19,15 @@ We are also asking you to describe how you will deploy the proxy in a cloud-base
 
 ### Location / Security concerns
 
-Regarding the proxy, the best scenario will be within the same network (LAN) where different applications are located:
+If we talk in the cloud without a Kubernetes environment, the best scenario will be within the same network (LAN) where different applications are located:
 
 ![Cloud Architecture](/Cloud_architecture_overview.png "Architecture Overview")
 
-This means that if we have different environments (or namespaces in a Kubernetes environment), as they will be in different networks, a proxy for each enviroment will be the best fit to process all the requests from the different applications and to provide security.
+This means that if we have different environments, as they will be in different networks, a proxy for each enviroment will be the best fit to process all the requests from the different applications and to provide security.
+
+---
+
+About how the DNS proxy works, in summary:
 
 The packets between the proxy and the upstream DNS server are sent over an encrypted connection so there is no expected security risks.
 
@@ -33,7 +37,8 @@ As the connection won't be encrypted **between the proxy and the clients (applic
 
 ### Deployment
 
-It will be recommeended to deploy it as a micro-service becuase it can escalate quickly and without issues and it doesn't have any more dependencies either as it can run independently.
+If we have an environment already deployed with micro-services in Kubernetes, then, the best thing will be to deploy this container within a pod for each node.
 
-I would suggest to deploy it as a service in Kubernetes and exposing the port the container is using because in this way, as Kubernetes provides DNS by default on each service, the applications can configure their name servers to that service (Proxy's service name) and as a result, the DNS proxy will handle the traffic between the applications' containers and the upstream DNS server securely.
+Then in Kubernetes terms, it will require to apply a DaemonSet (to ensure all Nodes run a copy of a Pod) and then configure Kubernetes DNS (CoreDNS) to point to our proxy-dns.
 
+There is more information about how it works [here](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/) but, basically changing the configmap of the CoreDNS service will apply it to all pods within the Kubernetes cluster.
