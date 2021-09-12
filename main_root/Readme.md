@@ -5,6 +5,7 @@
 NOTE: Althought the main security concern is running the main program as root (along with installing dependencies with *pip*), this is only for development purposes and it avoids to deal with ports lower than 1024 which can't be bind by default with non-root users.
 
 **This solution will work out of the box** by only changing the name server of the client to the DNS proxy IP address.
+
 ---
 
 ### Summary
@@ -15,10 +16,6 @@ It aims to be used as a micro-service (within a container) so you can specify an
 The proxy reads the query sent via UDP, creates an encrypted connection with an upstream server (Cloudflare) over TCP(TLS) and handles back the response to the client.
 
 It requires the [dnspython](https://www.dnspython.org/) library, as it will handle all the binary data from the requests and replies, otherwise, you will have to manage the raw data from the client and the upstream server.
-
-The best suit for a DNS proxy should be within the same network (LAN) than your applications are running:
-
-![Cloud Architecture](../Cloud_architecture_overview.png "Architecture Overview")
 
 ### Running the project in a container
 
@@ -38,7 +35,7 @@ Example:
 docker build -t dns_srv_proxy .
 ```
 
-- Run the container (**as root which is not recommended**) in dettached mode within the docker network created previously:
+- Run the container (**as root which is not recommended**) in detached mode within the docker network created previously:
 
 ```
 docker run --name <your-container-name> -e DNS_PROXY_IP=<your-IP-address> -d --net <your-docker-network> <your-image-name>
@@ -99,10 +96,11 @@ Address: 184.168.221.96
 
 ## Possible improvements
 
-- Control error of messages (RCODE for example)
+- Control error of queries/messages (RCODE for example)
 - Add TCP connectivity between client and proxy.
 - Add caching to gain performance in repetitive queries.
-# References used for this project
+
+## References used for this project
 
 - https://docs.python.org/3/library/ssl.html
 - https://docs.python.org/3.7/library/socket.html
@@ -112,5 +110,3 @@ Address: 184.168.221.96
 - https://gist.github.com/mrpapercut/92422ecf06b5ab8e64e502da5e33b9f7#file-raw-dns-req-py-L15
 - https://github.com/tigerlyb/DNS-Proxy-Server-in-Python/blob/master/DNSProxyServer.py
 - https://developers.cloudflare.com/1.1.1.1/encrypted-dns/dns-over-tls
-
-
