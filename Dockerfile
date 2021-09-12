@@ -14,7 +14,7 @@ RUN pip3 install --user dnspython
 #RUN pip3 install --user pipenv
 
 COPY dns_stub_resolver.py .
-#RUN chown -R pyuser:pyuser DNSproxy37.py
+RUN chown -R pyuser:pyuser DNSproxy37.py
 
 #CMD ["python3 -m venv /home/pyuser/.local/bin"]
 #CMD ["source /home/pyuser/.local/bin/bin/activate"]
