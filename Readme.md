@@ -10,6 +10,11 @@ It aims to be used as a micro-service (within a container) so you can specify an
 The proxy reads the query sent via UDP, creates an encrypted connection with an upstream server (Cloudflare) over TCP(TLS) and handles back the response to the client.
 
 It requires the [dnspython](https://www.dnspython.org/) library, as it will handle all the binary data from the requests and replies, otherwise, you will have to manage the raw data from the client and the upstream server.
+
+The best suit for a dns proxy should be within the same network (LAN) than your applications are running:
+
+![Cloud Architecture](/Cloud_architecture_overview.png "Architecture Overview")
+
 ### Running the project in a container
 
 - Create a network to avoid problems within your own LAN. Therefore
