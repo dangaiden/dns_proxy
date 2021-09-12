@@ -5,8 +5,10 @@ import ssl
 import dns.message
 import dns.query
 
-# Constants variables
+#  Root version of the project which runs port 53 (lower than 1024) and therefore
+#  it can be binded correctly to the IP address of the container without issues.
 
+# Constants' variables
 SERVER = os.environ.get("DNS_PROXY_IP") #  IP address of DNS proxy expected to be gathered from ENV variables (used in docker run -e <var>=<value>)
 PORT = 53 #  Port of DNS proxy
 ADDR = (SERVER, PORT)

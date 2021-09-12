@@ -1,11 +1,16 @@
 # README 
 
-## DNS-proxy project
+## DNS-proxy project (using root)
+
+NOTE: Althought the main security concern is running the main program as root (along with installing dependencies with *pip*), this is only for development purposes and it avoids to deal with ports lower than 1024 which can't be bind by default with non-root users.
+
+**This solution will work out of the box** by only changing the name server of the client to the DNS proxy IP address.
+---
 
 ### Summary
 
 This project aims to provide the functionality of a DNS proxy over TLS.
-It aims to be used as a micro-service (within a container) so you can specify an IP address (called using -e when running the container with Docker) that will listen on port 53, therefore, DNS requests sent to that IP address will be handled by the DNS proxy.
+It aims to be used as a micro-service (within a container) so you can specify an IP address (called using -e when running the container with Docker) that will **listen on port 53**, therefore, DNS requests sent to that IP address will be handled by the DNS proxy.
 
 The proxy reads the query sent via UDP, creates an encrypted connection with an upstream server (Cloudflare) over TCP(TLS) and handles back the response to the client.
 
@@ -13,7 +18,7 @@ It requires the [dnspython](https://www.dnspython.org/) library, as it will hand
 
 The best suit for a DNS proxy should be within the same network (LAN) than your applications are running:
 
-![Cloud Architecture](/Cloud_architecture_overview.png "Architecture Overview")
+![Cloud Architecture](../Cloud_architecture_overview.png "Architecture Overview")
 
 ### Running the project in a container
 

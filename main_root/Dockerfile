@@ -11,9 +11,11 @@ RUN apk update && apk add openssl
 # Work directory for our application
 WORKDIR /usr/local/bin
 
-# We do it as root although a warning will appear as it's not recommended.
+# Install dependency as root which will appear a warning and it's not recommended.
 RUN pip3 install --user dnspython
 
 COPY dns_stub_resolver.py .
+
+EXPOSE 53
 
 CMD ["python3","dns_stub_resolver.py"]
