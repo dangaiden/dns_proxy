@@ -23,7 +23,7 @@ Regarding the proxy, the best scenario will be within the same network (LAN) whe
 
 ![Cloud Architecture](/Cloud_architecture_overview.png "Architecture Overview")
 
-This means that if we have different environments, as they will be in different networks, a proxy for each enviroment will be the best fit to process all the requests from the different applications and to provide security.
+This means that if we have different environments (or namespaces in a Kubernetes environment), as they will be in different networks, a proxy for each enviroment will be the best fit to process all the requests from the different applications and to provide security.
 
 The packets between the proxy and the upstream DNS server are sent over an encrypted connection so there is no expected security risks.
 
@@ -35,5 +35,5 @@ As the connection won't be encrypted **between the proxy and the clients (applic
 
 It will be recommeended to deploy it as a micro-service becuase it can escalate quickly and without issues and it doesn't have any more dependencies either as it can run independently.
 
-I would suggest to deploy it as a service in Kubernetes and exposing the port the container is using because in this way, as Kubernetes provides DNS by default on each service, the applications can point to that service and as a result, the DNS proxy will handle the traffic between the applications' containers and the upstream DNS server.
+I would suggest to deploy it as a service in Kubernetes and exposing the port the container is using because in this way, as Kubernetes provides DNS by default on each service, the applications can configure their name servers to that service (Proxy's service name) and as a result, the DNS proxy will handle the traffic between the applications' containers and the upstream DNS server securely.
 
