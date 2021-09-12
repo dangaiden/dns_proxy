@@ -6,6 +6,8 @@ NOTE: The main difference with the root "main" project is that this will run in 
 
 **This solution won't work out of the box** by only changing the name server of the client to the DNS proxy IP address as the port where the container will run is 5300.
 
+This is better suited for micro-services environment when it's easier to configure a different DNS name server and ports plus the security "issues" are not a problem like in the other project.
+
 ---
 
 ### Summary
