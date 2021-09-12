@@ -41,4 +41,4 @@ If we have an **environment already deployed with micro-services in Kubernetes**
 
 Then in Kubernetes terms, it will require to deploy a DaemonSet (to ensure all Nodes run a copy of a Pod) and then configure Kubernetes DNS (CoreDNS) to point to our proxy-dns program.
 
-There is more information about how it works [here](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/) but, basically changing the configmap of the CoreDNS service will apply it to all pods within the Kubernetes cluster.
+There is more information about how it works [here](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/) but, basically changing the configmap of the CoreDNS service will apply it to all pods within the Kubernetes cluster or changing the resolv.conf for each node will work as well.
