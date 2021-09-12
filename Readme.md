@@ -1,6 +1,6 @@
 # Getting Started
 
-Here you will find 2 different versions of the same projects.
+Here you will find 2 different versions of the same project.
 
 Basically, the "main_root" folder, **runs the Python program as root on port 53** then, it works out of the box by only changing the name server of the client.
 
