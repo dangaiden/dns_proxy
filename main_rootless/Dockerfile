@@ -1,5 +1,5 @@
 #  Pull lightweight image
-FROM python:3.7-alpine
+FROM python:3.14.2-alpine
 
 #  Update and install openssl package
 RUN apk update && apk add openssl
