@@ -3,7 +3,7 @@
 ### to deal with lower ports than 1024.
 
 #  Pull lightweight image
-FROM python:3.7-alpine
+FROM python:3.14.3-alpine
 
 #  Update and install openssl package
 RUN apk update && apk add openssl
